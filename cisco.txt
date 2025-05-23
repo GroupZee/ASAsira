@@ -1,0 +1,51 @@
+Switch>en
+Switch#conf ter
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#ip routing
+Switch(config)#vlan 40
+Switch(config-vlan)#name Test
+Switch(config-vlan)#exit
+Switch(config)#vlan 50
+Switch(config-vlan)#name test1
+Switch(config-vlan)#exit
+Switch(config)#ip dhcp pool vlan10
+Switch(dhcp-config)#network 192.168.40.0 255.255.255.0
+Switch(dhcp-config)#def
+Switch(dhcp-config)#default-router 192.168.40.1
+Switch(dhcp-config)#dns
+Switch(dhcp-config)#dns-server 8.8.8.8
+Switch(dhcp-config)#exit
+Switch(config)#ip dhcp pool vlan50
+Switch(dhcp-config)#network 192.168.50.0 255.255.255.0
+Switch(dhcp-config)#default-router 192.168.50.1
+Switch(dhcp-config)#dns-server 8.8.8.8
+Switch(dhcp-config)#exit
+Switch(config)#int range g1/0/2-10
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 40
+Switch(config-if-range)#exit
+Switch(config)#int range g1/0/11-19
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 50
+Switch(config-if-range)#exit
+Switch(config)#do write
+Building configuration...
+Compressed configuration from 7383 bytes to 3601 bytes[OK]
+[OK]
+Switch(config)#int vlan 40
+Switch(config-if)#
+%LINK-5-CHANGED: Interface Vlan40, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan40, changed state to up
+
+Switch(config-if)#no shut
+Switch(config-if)#ip add 192.168.40.1 255.255.255.0
+Switch(config-if)#exit
+Switch(config)#int vlan 50
+Switch(config-if)#
+%LINK-5-CHANGED: Interface Vlan50, changed state to up
+
+Switch(config-if)#no shut
+Switch(config-if)#ip add 192.168.50.1 255.255.255.0
+Switch(config-if)#exit
+Switch(config)#
